@@ -68,7 +68,6 @@ public class Method_01_Test {
 
         // TODO invoquer la méthode sumAge pour que le test soit passant
         int result = daoA.sumAge();
-
         assert result == 210;
     }
 
