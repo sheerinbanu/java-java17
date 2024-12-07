@@ -16,15 +16,19 @@ public class Function_05_Test {
     //tag::functions[]
     // TODO compléter la fonction
     // TODO modifier le mot de passe en "secret"
-    Consumer<Person> changePasswordToSecret = null;
+    Consumer<Person> changePasswordToSecret = person -> person.setPassword("secret");
 
     // TODO compléter la fonction
     // TODO vérifier que l'age > 4 avec une assertion JUnit
-    Consumer<Person> verifyAge = null;
+    Consumer<Person> verifyAge = person -> {
+        if(person.getAge()<4){
+            throw new IllegalArgumentException("Age invalide: l'âge doit être supérieur à 4");
+        }
+    };
 
     // TODO compléter la fonction
     // TODO vérifier que le mot de passe est "secret" avec une assertion JUnit
-    Consumer<Person> verifyPassword = null;
+    Consumer<Person> verifyPassword = person -> person.getPassword().equals("secret");
     //end::functions[]
 
 
@@ -34,10 +38,15 @@ public class Function_05_Test {
 
         // TODO invoquer la méthode personList.forEach pour modifier les mots de passe en "secret"
         // personList.forEach...
+        for (Person person: personList){
+            changePasswordToSecret.accept(person);
+        }
 
         // TODO remplacer la boucle for par l'invocation de la méthode forEach
+        personList.forEach(changePasswordToSecret);
         // TODO Utiliser la méthode andThen pour chaîner les vérifications verifyAge et verifyPassword
         // personList.forEach...
+        Consumer<Person> verifyBoth = verifyAge.andThen(verifyPassword);
         for(Person p : personList) {
             verifyAge.accept(p);
             verifyPassword.accept(p);
